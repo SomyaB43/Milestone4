@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-depth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehicle-depth
+  template:
+    metadata:
+      labels:
+        app: vehicle-depth
+    spec:
+      containers:
+        - name: vehicle-depth
+          image: northamerica-northeast2-docker.pkg.dev/sofe4630/sofe4630u/vehicle-depth:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicle-depth-service
+spec:
+  selector:
+    app: vehicle-depth
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5003
+---

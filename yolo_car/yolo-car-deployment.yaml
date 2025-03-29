@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo-car
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yolo-car
+  template:
+    metadata:
+      labels:
+        app: yolo-car
+    spec:
+      containers:
+        - name: yolo-car
+          image: northamerica-northeast2-docker.pkg.dev/sofe4630/sofe4630u/yolo-car:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-car-service
+spec:
+  selector:
+    app: yolo-car
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5002
+---

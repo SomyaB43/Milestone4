@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-distance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehicle-distance
+  template:
+    metadata:
+      labels:
+        app: vehicle-distance
+    spec:
+      containers:
+        - name: vehicle-distance
+          image: northamerica-northeast2-docker.pkg.dev/sofe4630/sofe4630u/vehicle-distance:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicle-distance-service
+spec:
+  selector:
+    app: vehicle-distance
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5004
+---

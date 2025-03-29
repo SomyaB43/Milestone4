@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aerial-view
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aerial-view
+  template:
+    metadata:
+      labels:
+        app: aerial-view
+    spec:
+      containers:
+        - name: aerial-view
+          image: northamerica-northeast2-docker.pkg.dev/sofe4630/sofe4630u/aerial-view:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aerial-view-service
+spec:
+  selector:
+    app: aerial-view
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5004
+---

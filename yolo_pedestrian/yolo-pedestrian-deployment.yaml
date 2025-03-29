@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo-pedestrian
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yolo-pedestrian
+  template:
+    metadata:
+      labels:
+        app: yolo-pedestrian
+    spec:
+      containers:
+        - name: yolo-pedestrian
+          image: northamerica-northeast2-docker.pkg.dev/sofe4630/sofe4630u/yolo-pedestrian:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-pedestrian-service
+spec:
+  selector:
+    app: yolo-pedestrian
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---

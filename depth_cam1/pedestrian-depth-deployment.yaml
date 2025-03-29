@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pedestrian-depth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pedestrian-depth
+  template:
+    metadata:
+      labels:
+        app: pedestrian-depth
+    spec:
+      containers:
+        - name: pedestrian-depth
+          image: northamerica-northeast2-docker.pkg.dev/sofe4630/sofe4630u/pedestrian-depth:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pedestrian-depth-service
+spec:
+  selector:
+    app: pedestrian-depth
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+---
